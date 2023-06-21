@@ -1,10 +1,19 @@
 var http = require('http');
-const fetch = require("node-fetch");
-console.log('Loading function');
+const axios = require("axios");
 
-exports.handler = async(event, context, callback) => {
-    const response = await fetch('https://dummyjson.com/products');
-    const jsonData = await response.json();
-    console.log(jsonData)
-    return jsonData
+async function Api() {
+  const response = await axios.get("https://dummyjson.com/products",{
+  headers : {
+    "Content-Type" : "application/json"
+  }
+  })
+  
+  //receive data from request
+  console.log(response.data);
+  return response.data;
+}
+
+exports.handler = async (event, context, callback) => {
+    Api()
+    return "done"
 }
